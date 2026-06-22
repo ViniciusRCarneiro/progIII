@@ -1,48 +1,50 @@
 <?php
 
-class Funcionario {
-    private $nome;
-    private $idade;
-    private $salario;
+class Funcionario
+{
+    protected $nome;
+    protected $salario;
 
-    public function setNome($nome) {
-        if (empty($nome)) {
-            echo "Erro: o nome não pode ser vazio.<br>";
-            return false;
-        }
+    public function __construct($nome, $salario)
+    {
         $this->nome = $nome;
-        return true;
+        $this->salario = $salario;
     }
 
-    public function getNome() {
+    public function calcularBonus()
+    {
+        return $this->salario * 0.10;
+    }
+
+    public function getNome()
+    {
         return $this->nome;
     }
 
-    public function setIdade($idade) {
-        if ($idade < 0 || $idade > 120) {
-            echo "Erro: a idade deve estar entre 0 e 120.<br>";
-            return false;
-        }
-        $this->idade = $idade;
-        return true;
-    }
-
-    public function getIdade() {
-        return $this->idade;
-    }
-
-    public function setSalario($salario) {
-        if ($salario <= 0) {
-            echo "Erro: o salário deve ser maior que zero.<br>";
-            return false;
-        }
-        $this->salario = $salario;
-        return true;
-    }
-
-    public function getSalario() {
+    public function getSalario()
+    {
         return $this->salario;
     }
 }
 
+class Gerente extends Funcionario
+{
+}
+
+class Desenvolvedor extends Funcionario
+{
+}
+
+$gerente = new Gerente("João", 20000);
+$dev = new Desenvolvedor("Maria", 8000);
+
+echo "Nome: " . $gerente->getNome() . "<br>";
+echo "Cargo: Gerente<br>";
+echo "Salário: " . $gerente->getSalario() . "<br>";
+echo "Bônus: " . $gerente->calcularBonus() . "<br><br>";
+
+echo "Nome: " . $dev->getNome() . "<br>";
+echo "Cargo: Desenvolvedor<br>";
+echo "Salário: " . $dev->getSalario() . "<br>";
+echo "Bônus: " . $dev->calcularBonus();
 ?>
